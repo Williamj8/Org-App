@@ -28,6 +28,12 @@ Preview the production build locally:
 npm run preview
 ```
 
+Run local Server:
+
+```bash
+node server.js
+```
+
 Home as Dashboard [http://localhost:3000/dashboard](http://localhost:3000/dashboard).
 All Users as Clients [http://localhost:3000/clients](http://localhost:3000/clients).
 Annoucements [http://localhost:3000/Annoucements](http://localhost:3000/Annoucements).
