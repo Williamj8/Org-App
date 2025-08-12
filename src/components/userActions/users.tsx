@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Table, Tag, Typography } from "antd";
 import type { User } from "../../services/users-api/types";
 import { fetchUsers } from "../../services/users-api/users";
@@ -11,8 +11,23 @@ const UserList: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const loadUsers = async () => {
+  // useEffect(() => {
+  //   const loadUsers = async () => {
+  //     try {
+  //       const data = await fetchUsers();
+  //       setUsers(data);
+  //     } catch (err: any) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   loadUsers();
+  // }, []);
+
+ 
+      const loadUsers = async () => {
       try {
         const data = await fetchUsers();
         setUsers(data);
@@ -23,8 +38,8 @@ const UserList: React.FC = () => {
       }
     };
 
-    loadUsers();
-  }, []);
+     const clients = use(loadUsers())
+
 
   if (error) return <Text type="danger">{error}</Text>;
 

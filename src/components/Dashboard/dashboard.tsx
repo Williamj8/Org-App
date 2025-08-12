@@ -2,16 +2,20 @@ import React, { useEffect, useState } from "react";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid } from "recharts";
 import type { User } from "../../services/users-api/types";
 import { fetchUsers } from "../../services/users-api/users";
+import Spinner from "../../utils/spinner";
+
 
 
 const COLORS = ["#4caf50", "#f44336"]; // green for active, red for inactive
 
 const Dashboard: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+    // const [spinner, setSpinner] = useState(false);
 
     useEffect(() => {
         const loadUsers = async () => {
+            setLoading(true)
             try {
                 const data = await fetchUsers();
                 setUsers(data);
@@ -25,7 +29,7 @@ const Dashboard: React.FC = () => {
         loadUsers();
     }, []);
 
-    if (loading) return <div>Loading...</div>;
+    // if (loading) return <div>Loading...</div>;
 
     // Calculate active vs inactive users
     const activeCount = users.filter((u) => u.status === "Active").length;
@@ -55,7 +59,9 @@ const Dashboard: React.FC = () => {
         .map(([date, count]) => ({ date, count }))
         .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
-    return (
+return loading ? (
+  <Spinner />
+) : (   
         <div style={{ display: "flex", flexDirection: "column", gap: 40 }}>
             <h2>User Status Overview</h2>
 
@@ -89,7 +95,7 @@ const Dashboard: React.FC = () => {
                     <Line type="monotone" dataKey="count" stroke="#8884d8" activeDot={{ r: 8 }} />
                 </LineChart>
             </ResponsiveContainer>
-        </div>
+        </div>         
     );
 };
 
