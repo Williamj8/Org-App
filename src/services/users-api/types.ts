@@ -1,0 +1,8 @@
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  address: string;
+  status: string;
+  last_login: string;
+}
